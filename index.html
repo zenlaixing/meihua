@@ -241,6 +241,144 @@
 </footer>
 
 <script>
+    const hexagrams = [
+        // 下卦 0 (坤), 上卦 0 (坤)
+        { symbol: "䷁", name: "坤为地", judgment: "元亨 利牝马之贞 君子有攸往 先迷后得主利 勤俭不贫" },
+        // 下卦 0 (坤), 上卦 1 (乾)
+        { symbol: "䷋", name: "天地否", judgment: "否闭不利君子贞 小人吉" },
+        // 下卦 0 (坤), 上卦 2 (兑)
+        { symbol: "䷬", name: "泽地萃", judgment: "萃亨王假有庙 行成思慎 动不渝 福禄无咎" },
+        // 下卦 0 (坤), 上卦 3 (离)
+        { symbol: "䷢", name: "火地晋", judgment: "晋如鼫鼠 百谷丰登 文王与女 得其资币 悔亡故志" },
+        // 下卦 0 (坤), 上卦 4 (震)
+        { symbol: "䷏", name: "雷地豫", judgment: "豫谦顺以动 领会大中 用行庆 大有庆" },
+        // 下卦 0 (坤), 上卦 5 (巽)
+        { symbol: "䷓", name: "风地观", judgment: "观盥而不荐 有孚颙若 中正以观天下 观民设教" },
+        // 下卦 0 (坤), 上卦 6 (坎)
+        { symbol: "䷇", name: "水地比", judgment: "比吉原筮元永 无所不利 不宁方来 在系匪寇 获从事去宗" },
+        // 下卦 0 (坤), 上卦 7 (艮)
+        { symbol: "䷖", name: "山地剥", judgment: "剥不利有攸往 极小人哉 未可长也" },
+
+        // 下卦 1 (乾), 上卦 0 (坤)
+        { symbol: "䷊", name: "地天泰", judgment: "泰小往不吉 大往吉 正吉无咎" },
+        // 下卦 1 (乾), 上卦 1 (乾)
+        { symbol: "䷀", name: "乾为天", judgment: "乾元亨 利贞" },
+        // 下卦 1 (乾), 上卦 2 (兑)
+        { symbol: "䷪", name: "泽天夬", judgment: "夬扬于王庭 包羞涩缩 出涕沱 若号 无咎" },
+        // 下卦 1 (乾), 上卦 3 (离)
+        { symbol: "䷍", name: "火天大有", judgment: "大有元亨 天道酬勤" },
+        // 下卦 1 (乾), 上卦 4 (震)
+        { symbol: "䷡", name: "雷天大壮", judgment: "大壮利贞" },
+        // 下卦 1 (乾), 上卦 5 (巽)
+        { symbol: "䷈", name: "风天小畜", judgment: "小畜亨 积善家富 心自慎 家必自慎" },
+        // 下卦 1 (乾), 上卦 6 (坎)
+        { symbol: "䷄", name: "水天需", judgment: "需有台 不速之客三人来 不速之客一人来 盘庚之迁" },
+        // 下卦 1 (乾), 上卦 7 (艮)
+        { symbol: "䷙", name: "山天大畜", judgment: "大畜利贞 不家食吉 贞不复吉" },
+
+        // 下卦 2 (兑), 上卦 0 (坤)
+        { symbol: "䷒", name: "地泽临", judgment: "临元亨 利贞 如履薄冰" },
+        // 下卦 2 (兑), 上卦 1 (乾)
+        { symbol: "䷉", name: "天泽履", judgment: "履虎尾不咥人亨" },
+        // 下卦 2 (兑), 上卦 2 (兑)
+        { symbol: "䷹", name: "兑为泽", judgment: "兑亨 利贞" },
+        // 下卦 2 (兑), 上卦 3 (离)
+        { symbol: "䷥", name: "火泽睽", judgment: "睽小事吉 大事凶 至晦亨" },
+        // 下卦 2 (兑), 上卦 4 (震)
+        { symbol: "䷦", name: "雷泽归妹", judgment: "归妹征凶 无攸利" },
+        // 下卦 2 (兑), 上卦 5 (巽)
+        { symbol: "䷼", name: "风泽中孚", judgment: "中孚豚鱼吉 王用亨于岐山 小人得尚 或锡眚有孚" },
+        // 下卦 2 (兑), 上卦 6 (坎)
+        { symbol: "䷻", name: "水泽节", judgment: "节亨 苦节不可贞" },
+        // 下卦 2 (兑), 上卦 7 (艮)
+        { symbol: "䷨", name: "山泽损", judgment: "损亨 不失老谋 可贞利有攸往" },
+
+        // 下卦 3 (离), 上卦 0 (坤)
+        { symbol: "䷣", name: "地火明夷", judgment: "明夷垂 winged things flying away 是非不明" },
+        // 下卦 3 (离), 上卦 1 (乾)
+        { symbol: "䷌", name: "天火同人", judgment: "同人于野 亨 利涉大川 不见大人" },
+        // 下卦 3 (离), 上卦 2 (兑)
+        { symbol: "䷰", name: "泽火革", judgment: "革巳日乃孚 方悔吝 无咎" },
+        // 下卦 3 (离), 上卦 3 (离)
+        { symbol: "䷝", name: "离为火", judgment: "离利贞 巫咸利用禴祭" },
+        // 下卦 3 (离), 上卦 4 (震)
+        { symbol: "䷶", name: "雷火丰", judgment: "丰亨 王假之勿忧 日宜变" },
+        // 下卦 3 (离), 上卦 5 (巽)
+        { symbol: "䷪", name: "风火家人", judgment: "家人利女贞" },
+        // 下卦 3 (离), 上卦 6 (坎)
+        { symbol: "䷾", name: "水火既济", judgment: "既济亨 小者亨 大者陨命" },
+        // 下卦 3 (离), 上卦 7 (艮)
+        { symbol: "䷕", name: "山火贲", judgment: "贲亨 小白告回归应 大赤告荒" },
+
+        // 下卦 4 (震), 上卦 0 (坤)
+        { symbol: "䷗", name: "地雷复", judgment: "复亨出入无疾 治器利用回向" },
+        // 下卦 4 (震), 上卦 1 (乾)
+        { symbol: "䷘", name: "天雷无妄", judgment: "无妄可贞 无妄行有眚 悔亡有获" },
+        // 下卦 4 (震), 上卦 2 (兑)
+        { symbol: "䷐", name: "泽雷随", judgment: "随时之义" },
+        // 下卦 4 (震), 上卦 3 (离)
+        { symbol: "䷔", name: "火雷噬嗑", judgment: "噬嗑亨 利贞 不信有孚" },
+        // 下卦 4 (震), 上卦 4 (震)
+        { symbol: "䷲", name: "震为雷", judgment: "震亨 惧出乎门 宜笑言 名声闻 富有功" },
+        // 下卦 4 (震), 上卦 5 (巽)
+        { symbol: "䷩", name: "风雷益", judgment: "益亨 利有攸往 自外来者不穷 东邻杀牛不如西邻之禴祭 实受其福" },
+        // 下卦 4 (震), 上卦 6 (坎)
+        { symbol: "䷂", name: "水雷屯", judgment: "屯初九磐桓 大习坎 利居贞 有利于去 乘马班如 卸装徒步 得妾以其子 无咎 轻而往 重而来 勤俭不贫" },
+        // 下卦 4 (震), 上卦 7 (艮)
+        { symbol: "䷚", name: "山雷颐", judgment: "颐贞吉 内省不疚 利见大人" },
+
+        // 下卦 5 (巽), 上卦 0 (坤)
+        { symbol: "䷭", name: "地风升", judgment: "升元亨 用见大人 君子以顺德 教民七政" },
+        // 下卦 5 (巽), 上卦 1 (乾)
+        { symbol: "䷫", name: "天风姤", judgment: "姤女壮 不利于男 子反之 女进是谓之得男" },
+        // 下卦 5 (巽), 上卦 2 (兑)
+        { symbol: "䷛", name: "泽风大过", judgment: "大过栋桡利有攸往 匪丧厥首 凶" },
+        // 下卦 5 (巽), 上卦 3 (离)
+        { symbol: "䷱", name: "火风鼎", judgment: "鼎元亨 利贞" },
+        // 下卦 5 (巽), 上卦 4 (震)
+        { symbol: "䷟", name: "雷风恒", judgment: "恒亨 无咎 利贞 恒先柔后刚" },
+        // 下卦 5 (巽), 上卦 5 (巽)
+        { symbol: "☴", name: "巽为风", judgment: "巽亨 柔来 进退 自邑告命 有孚德交吉" },
+        // 下卦 5 (巽), 上卦 6 (坎)
+        { symbol: "䷯", name: "水风井", judgment: "井，改邑不改井，无丧无得，往来井井井。改邑不改井，无丧无得。往来井井。汔至，亦未繘井，羸其瓶，凶" },
+        // 下卦 5 (巽), 上卦 7 (艮)
+        { symbol: "䷑", name: "山风蛊", judgment: "蛊元亨 利涉大川 先甲三日 後甲三日" },
+
+        // 下卦 6 (坎), 上卦 0 (坤)
+        { symbol: "䷃", name: "地水师", judgment: "师贞丈人 君子以容" },
+        // 下卦 6 (坎), 上卦 1 (乾)
+        { symbol: "䷅", name: "天水讼", judgment: "讼有孚窒惕中吉 彼岸从终吉" },
+        // 下卦 6 (坎), 上卦 2 (兑)
+        { symbol: "䷞", name: "泽水困", judgment: "困亨 时来有悔 解朋盍簪" },
+        // 下卦 6 (坎), 上卦 3 (离)
+        { symbol: "䷿", name: "火水未济", judgment: "未济亨 小狐汔济濡其尾 无攸利" },
+        // 下卦 6 (坎), 上卦 4 (震)
+        { symbol: "䷧", name: "雷水解", judgment: "解除免邪 无咎" },
+        // 下卦 6 (坎), 上卦 5 (巽)
+        { symbol: "䷺", name: "风水涣", judgment: "涣亨 行有不得 惧涂 属其财 亨" },
+        // 下卦 6 (坎), 上卦 6 (坎)
+        { symbol: "䷄", name: "坎为水", judgment: "习坎有孚维心亨 行有不得 见险而能止" },
+        // 下卦 6 (坎), 上卦 7 (艮)
+        { symbol: "䷦", name: "山水蹇", judgment: "蹇利西南 拜至于吉" },
+
+        // 下卦 7 (艮), 上卦 0 (坤)
+        { symbol: "䷎", name: "地山谦", judgment: "谦亨 君子有终 用涉大川 弛弓 缺弧 以其知犯难 既往不追" },
+        // 下卦 7 (艮), 上卦 1 (乾)
+        { symbol: "䷠", name: "天山遁", judgment: "遁亨 知进而不知退 乱而走" },
+        // 下卦 7 (艮), 上卦 2 (兑)
+        { symbol: "䷚", name: "泽山咸", judgment: "咸亨 利贞 泻泽 施于阳施于阴" },
+        // 下卦 7 (艮), 上卦 3 (离)
+        { symbol: "䷷", name: "火山旅", judgment: "旅小亨 利休咎 发怒贞" },
+        // 下卦 7 (艮), 上卦 4 (震)
+        { symbol: "䷽", name: "雷山小过", judgment: "小过亨 履错之敬" },
+        // 下卦 7 (艮), 上卦 5 (巽)
+        { symbol: "䷴", name: "风山渐", judgment: "渐亨 进而高 用宫室 不可不慎" },
+        // 下卦 7 (艮), 上卦 6 (坎)
+        { symbol: "䷦", name: "水山蹇", judgment: "蹇利西南 拜至于吉" },
+        // 下卦 7 (艮), 上卦 7 (艮)
+        { symbol: "䷳", name: "艮为山", judgment: "艮彖曰 艮艮其背 不获其身 行其庭不见其人 无实无华" }
+    ];
+
     function cl() {
         const reg = new RegExp("^[0-9]*$");
         const x = document.getElementById("x").value.trim();
@@ -261,59 +399,7 @@
         const trigramElementClasses = ["earth", "metal", "metal", "fire", "wood", "wood", "water", "earth"];
         const trigramSymbols = ["☷", "☰", "☱", "☲", "☳", "☴", "☵", "☶"];
         
-        const hexagrams = [
-            { symbol: "䷀", name: "乾", judgment: "天行健，君子以自强。" },
-            { symbol: "䷁", name: "坤", judgment: "地势坤，君子以厚德载物。" },
-            { symbol: "䷂", name: "屯", judgment: "刚柔始交而难生，动乎险中大亨贞，雷雨之动满盈。" },
-            { symbol: "䷃", name: "蒙", judgment: "山下出泉，蒙；君子以果行育德。" },
-            { symbol: "䷄", name: "需", judgment: "云上于天，需；君子以饮食宴乐。" },
-            { symbol: "䷅", name: "讼", judgment: "天与水违行，讼；君子期而不求，大人施舍，刑错四术，列位应时，上下和同。" },
-            { symbol: "䷆", name: "师", judgment: "地中有水，师；君子以容民畜众。" },
-            { symbol: "䷇", name: "比", judgment: "地上有水，比；先王以建万国亲诸侯。" },
-            { symbol: "䷈", name: "小畜", judgment: "风行天上，小畜；君子以懿文节慎。" },
-            { symbol: "䷉", name: "履", judgment: "上天下泽，履；君子以辨上下，安左右，知险夷，辩治乱。" },
-            { symbol: "䷊", name: "泰", judgment: "天地交，泰；后以财成天地之道，辅相天地之宜，以右民。" },
-            { symbol: "䷋", name: "否", judgment: "天地不交，否；君子俭约休否。" },
-            { symbol: "䷌", name: "同人", judgment: "天与火，同人；君子以类族辨物。" },
-            { symbol: "䷍", name: "大有", judgment: "火在天上，大有；君子以遏恶扬善，顺天休命。" },
-            { symbol: "䷎", name: "谦", judgment: "地中有山，谦；君子以裒多益寡，称物平施。" },
-            { symbol: "䷏", name: "豫", judgment: "雷出地奋，豫；先王以作乐崇德，殷荐之上帝，以配祖考。" },
-            { symbol: "䷐", name: "随", judgment: "泽中有木，随；君子以诚信，作为义。" },
-            { symbol: "䷑", name: "蛊", judgment: "山下有风，蛊；君子以振民育德。" },
-            { symbol: "䷒", name: "临", judgment: "地中有雷，临；君子以教思无穷，容保民无疆。" },
-            { symbol: "䷓", name: "观", judgment: "风行地上，观；先王以省方观民设教。" },
-            { symbol: "䷔", name: "噬嗑", judgment: "雷电噬嗑，先王以明罚敕法。" },
-            { symbol: "䷕", name: "贲", judgment: "山下有火，贲；君子以明庶政，无敢折狱。" },
-            { symbol: "䷖", name: "剥", judgment: "山上剥，剥；不利有攸往。" },
-            { symbol: "䷗", name: "复", judgment: "雷在地中，复；先王以至日闭关，商旅不行，后不省方。" },
-            { symbol: "䷘", name: "无妄", judgment: "天下雷行，无妄；先王以茂对时，修徳行谊。" },
-            { symbol: "䷙", name: "大畜", judgment: "天在田上，大畜；君子以多识前言往行，以辅相断吉凶。" },
-            { symbol: "䷚", name: "颐", judgment: "山下有雷，颐；君子以慎言语，节饮食。" },
-            { symbol: "䷛", name: "损", judgment: "山下有泽，损；君子以惩忿窒欲。" },
-            { symbol: "䷜", name: "益", judgment: "风雷益，君子见贤而思齐焉。" },
-            { symbol: "䷝", name: "夬", judgment: "泽上于天，夬；君子以决疑志也。" },
-            { symbol: "䷞", name: "姤", judgment: "天与水相遇，姤；后以施命诰四方。" },
-            { symbol: "䷟", name: "萃", judgment: "泽上于地，萃；君子以聚群会友。" },
-            { symbol: "䷠", name: "升", judgment: "地中生木，升；君子以顺德，积小以高大之事。" },
-            { symbol: "䷡", name: "困", judgment: "泽无水，困；君子以致命遂志也。" },
-            { symbol: "䷢", name: "井", judgment: "木上有水，井；君子以劳民劝相。" },
-            { symbol: "䷣", name: "革", judgment: "泽中有火，革；君子豹变，小人革面。" },
-            { symbol: "䷤", name: "鼎", judgment: "木上有火，鼎；君子以正位凝命。" },
-            { symbol: "䷥", name: "震", judgment: "洩雷风，震惊百里者；以其惊众阴之散也。" },
-            { symbol: "䷦", name: "艮", judgment: "兼山，艮；君子以止居家。" },
-            { symbol: "䷧", name: "渐", judgment: "鸿渐于陆，其羽可用为仪，吉。" },
-            { symbol: "䷨", name: "归妹", judgment: "征邑，无咎；利涉大川，返还来邦。" },
-            { symbol: "䷩", name: "丰", judgment: "雷电皆入地下，丰；君子以折狱致刑。" },
-            { symbol: "䷪", name: "旅", judgment: "山上有火，旅；君子以处失而亨行。" },
-            { symbol: "䷫", name: "巽", judgment: "重巽以申命，刚巽乎中正而志行，是以鸣晦亨。" },
-            { symbol: "䷬", name: "兑", judgment: "丽泽，兑；君子以朋友讲习。" },
-            { symbol: "䷭", name: "涣", judgment: "风行水上，涣；先王以享于帝立庙。" },
-            { symbol: "䷮", name: "节", judgment: "水在草上，节；君子以制器适道。" },
-            { symbol: "䷯", name: "中孚", judgment: "信及豚鱼，吉；利涉大川，乘木舟。" },
-            { symbol: "䷰", name: "小过", judgment: "山上有飞鸟，小过；可小事不可大事。利于飞。" },
-            { symbol: "䷱", name: "既济", judgment: "水在火上，既济；君子以思患而预防之。" },
-            { symbol: "䷲", name: "未济", judgment: "火在水上，未济；君子以慎辨物居方。" }
-        ];
+       
 
         const X = [
             "次吉，70分。外部环境“比合”自己：此事顺心顺意，百无禁忌。",
@@ -347,8 +433,8 @@
         const hexagram = hexagrams[hexagramIndex];
 
         // 显示结果
-        document.getElementById('upperTrigram').innerHTML = `${upperTrigram} (${trigramNames[upperTrigram]}) ${trigramSymbols[upperTrigram]} (<span class="${trigramElementClasses[upperTrigram]}">${trigramElements[upperTrigram]}</span>)`;
-        document.getElementById('lowerTrigram').innerHTML = `${lowerTrigram} (${trigramNames[lowerTrigram]}) ${trigramSymbols[lowerTrigram]} (<span class="${trigramElementClasses[lowerTrigram]}">${trigramElements[lowerTrigram]}</span>)`;
+        document.getElementById('upperTrigram').innerHTML = `${trigramSymbols[upperTrigram]} (${trigramNames[upperTrigram]}) (<span class="${trigramElementClasses[upperTrigram]}">${trigramElements[upperTrigram]}</span>)`;
+        document.getElementById('lowerTrigram').innerHTML = `${trigramSymbols[lowerTrigram]} (${trigramNames[lowerTrigram]}) (<span class="${trigramElementClasses[lowerTrigram]}">${trigramElements[lowerTrigram]}</span>)`;
         document.getElementById('hexagramSymbol').textContent = hexagram.symbol;
         document.getElementById('hexagramName').textContent = hexagram.name;
         document.getElementById('relationship').textContent = relationship;
